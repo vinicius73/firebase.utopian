@@ -1,0 +1,7 @@
+/.firebaserc
+/node_modules
+/functions
+/dist
+/service-account.json
+/web-config.json
+/.env
