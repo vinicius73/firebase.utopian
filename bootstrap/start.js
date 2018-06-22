@@ -9,7 +9,7 @@ const firebaseFunctions = require('firebase-functions')
 const firebaseAdmin = require('firebase-admin')
 
 // initialize the firebase app.
-firebaseAdmin.initializeApp(config)
+export const app = firebaseAdmin.initializeApp(config)
 
 // export both admin and functions.
 export const admin = firebaseAdmin
