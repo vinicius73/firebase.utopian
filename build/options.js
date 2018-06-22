@@ -15,7 +15,8 @@ exports.moduleRules = [
 
 // loading aliases.
 exports.alias = {
-  src: path.resolve('./src')
+  src: path.resolve('./src'),
+  bootstrap: path.resolve('./bootstrap')
 }
 
 // plugins.
