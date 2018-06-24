@@ -5,3 +5,5 @@
 /service-account.json
 /web-config.json
 /.env
+/*.log
+/functions/*.log
