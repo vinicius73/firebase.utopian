@@ -1,6 +1,13 @@
-import factoryServer from './factory'
+// import factory server
+import factoryServer from '../../support/http/factory'
 
-const httpKernel = factoryServer()
+// import core unit.
+import { middleware } from '../core'
+
+// import route definitions
+import routeDefinitions from './route-definitions'
+
+const httpKernel = factoryServer(middleware, routeDefinitions)
 
 // default router export.
 export default httpKernel

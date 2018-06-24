@@ -1,6 +1,6 @@
 import { forEach, castArray } from 'lodash'
 import { Router } from 'express'
-import prepareHandler from '../../../support/http/prepareHandler'
+import prepareHandler from '../../prepareHandler'
 
 const getHandlers = route => {
   const handlers = castArray(route.handler)
