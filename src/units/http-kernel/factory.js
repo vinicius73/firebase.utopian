@@ -4,7 +4,10 @@ import { forEach } from 'lodash'
 import { Router } from 'express'
 // import core unit.
 import { middleware } from '../core'
+// import registry routes
 import { registryRoutes } from './routes'
+// import route definitions
+import routeDefinitions from './route-definitions'
 
 const factoryServer = () => {
   // create a router instance for the unit.
@@ -15,7 +18,7 @@ const factoryServer = () => {
     httpKernel.use(m)
   })
 
-  registryRoutes(httpKernel)
+  registryRoutes(httpKernel, routeDefinitions)
 
   return httpKernel
 }
