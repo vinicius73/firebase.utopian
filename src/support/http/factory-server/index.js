@@ -6,7 +6,7 @@ import { Router } from 'express'
 import { registryRoutes } from './routes'
 
 const factoryServer = (middlewares, routeDefinitions) => {
-  // create a router instance for the unit.
+  // create a router instance
   const httpKernel = new Router()
 
   // loop enabling all middleware.
@@ -14,6 +14,7 @@ const factoryServer = (middlewares, routeDefinitions) => {
     httpKernel.use(middleware)
   })
 
+  // registry route definitions
   registryRoutes(httpKernel, routeDefinitions)
 
   return httpKernel
