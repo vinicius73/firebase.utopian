@@ -9,13 +9,18 @@ const factoryServer = (middlewares, routeDefinitions) => {
   // create a router instance
   const httpKernel = new Router()
 
-  // loop enabling all middleware.
+  // pre middleware.
   forEach(middlewares.pre, middleware => {
     httpKernel.use(middleware)
   })
 
   // registry route definitions
   registryRoutes(httpKernel, routeDefinitions)
+
+  // post middleware.
+  forEach(middlewares.post, middleware => {
+    httpKernel.use(middleware)
+  })
 
   return httpKernel
 }
