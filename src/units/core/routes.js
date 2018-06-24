@@ -1,8 +1,12 @@
-// import express router.
-import { Router } from 'express'
-
-// create a router instance for the unit.
-const router = new Router()
-
-// default router export.
-export default router
+// router defination.
+export default {
+  prefix: '/',
+  routes: [{
+    path: '/ping',
+    methods: ['post'],
+    handler: (data, context) => {
+      console.log('pong')
+      return Promise.resolve({ pong: true })
+    }
+  }]
+}
