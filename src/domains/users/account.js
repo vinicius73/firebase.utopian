@@ -38,6 +38,24 @@ export class Account extends Model {
   }
 
   /**
+   * Account name getter.
+   *
+   * @return {string|null}
+   */
+  getAccountName () {
+    return get(this, 'name')
+  }
+
+  /**
+   * Account UID getter.
+   *
+   * @return {string|null}
+   */
+  getUID () {
+    return this.getAccountName() ? `steem:${this.getAccountName()}` : null
+  }
+
+  /**
    * Primary key / document reference value.
    *
    * @return {string|number|null}

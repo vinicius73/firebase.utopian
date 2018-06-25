@@ -7,18 +7,15 @@ import * as admin from 'firebase-admin'
  * @return {Promise<admin.auth.UserRecord>}
  */
 export const updateFirebaseUser = (account) => {
-  // make steem prefixed uuid.
-  const uid = 'steem:' + account.id
-
   // user data.
   const userData = {
-    displayName: account.name
-    // photoURL: account.profile.avatar
+    displayName: account.name,
+    photoURL: 'https://img.blocker.press/a/' + account.name
   }
 
   // update the user, suppressing errors.
   return admin.auth()
-    .updateUser(uid, userData)
+    .updateUser(account.getUID(), userData)
     .then(() => account)
     .catch()
 }
@@ -30,13 +27,11 @@ export const updateFirebaseUser = (account) => {
  * @return {Promise<admin.auth.UserRecord>}
  */
 export const createFirebaseUser = (account) => {
-  // make steem prefixed uuid.
-  const uid = 'steem:' + account.id
-
   // create firebase user data.
   const userData = {
-    uid: uid,
-    displayName: account.name
+    uid: account.getUID(),
+    displayName: account.name,
+    photoURL: 'https://img.blocker.press/a/' + account.name
   }
 
   // create the user.

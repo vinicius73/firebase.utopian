@@ -8,8 +8,6 @@ import * as admin from 'firebase-admin'
  * @return {Promise<string>}
  */
 export const issueToken = (account) => {
-  // generate a steem prefixed uuid.
-  const uid = 'steem:' + account.id
   // create a custom token and return.
-  return admin.auth().createCustomToken(uid)
+  return admin.auth().createCustomToken(account.getUID())
 }
