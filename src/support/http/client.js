@@ -27,7 +27,9 @@ instance.interceptors.response.use(flattenSuccess, flattenError)
 instance.defaults.headers.post['Content-Type'] = 'application/json'
 
 // named export.
+/** @type {AxiosInstance} */
 export const http = instance
 
 // default export.
+/** @type {AxiosInstance} */
 export default instance
