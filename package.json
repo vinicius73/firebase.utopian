@@ -9,6 +9,7 @@
     "watch:server": "webpack --config build/webpack.server.js -w",
     "build:firebase": "webpack --config build/webpack.firebase.js",
     "build:server": "webpack --config build/webpack.server.js",
+    "deploy:firebase": "firebase deploy --only functions",
     "start": "node ./bin/www",
     "prestart": "npm run -s build",
     "lint": "eslint src"
