@@ -1,5 +1,6 @@
 // pre middleware.
 import logger from './logger'
+// import headers from './headers'
 import cors from './cors'
 import json from './json'
 import urlencoded from './url-encoded'
@@ -10,6 +11,7 @@ import errorHandler from './errorHandler'
 // export pre middleware.
 export const pre = {
   logger,
+  // headers,
   cors,
   json,
   urlencoded
