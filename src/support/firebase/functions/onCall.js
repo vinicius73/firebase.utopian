@@ -109,3 +109,6 @@ export function onCall (handler) {
 
   return finalHandler
 }
+
+// default export.
+export default onCall
