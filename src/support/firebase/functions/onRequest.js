@@ -5,4 +5,5 @@ export function onRequest (handler) {
   return cloudFunction
 }
 
+// default export.
 export default onRequest
