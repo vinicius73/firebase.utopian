@@ -45,9 +45,12 @@ export class Contribution extends Model {
       id: null, // auto generated id.
       title: null, // human title for the contribution.
       author: null, // steem author id.
+      except: null, // optional except for small spaces descriptions.
       permlink: null, // steem permlink / slug.
-      account: null, // internal account id reference.
-      markdown: null, // markdown body.
+      accountId: null, // internal account id reference.
+      projectId: null, // internal project id reference.
+      body: null, // markdown body.
+      html: null, // parsed markdown body (pre-render),
       beneficiaryPercent: 0.15, // value of the beneficiary reward percent for utopian.
       tags: [], // list of tags on the contribution.
       createdAt: null, // create date.
