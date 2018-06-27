@@ -89,7 +89,10 @@ export class Account extends Model {
         website: null,
         about: null,
         signature: null
-      }
+      },
+      createdAt: null, // create date.
+      updatedAt: null, // update date.
+      deletedAt: null // delete date (soft deletes, keep the record but hidden).
     }
   }
 }
