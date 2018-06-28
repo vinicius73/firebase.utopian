@@ -10,7 +10,7 @@ export const isValidRequest = (req) => {
     return false
   }
   // A content-type header is desirable.
-  if (method === 'POST' && (req.header('Content-Type') || '').toLowerCase()) {
+  if (method === 'POST' && (req.header('Content-Type') || '').toLowerCase().indexOf('json') === -1) {
     console.warn('Cannot guess Content-Type.')
     return false
   }
