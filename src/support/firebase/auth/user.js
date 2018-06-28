@@ -9,7 +9,9 @@ import * as admin from 'firebase-admin'
 export const updateFirebaseUser = (account) => {
   // user data.
   const userData = {
+    // display name.
     displayName: account.name,
+    // photo / avatar URL.
     photoURL: 'https://img.blocker.press/a/' + account.name
   }
 
@@ -27,10 +29,18 @@ export const updateFirebaseUser = (account) => {
  * @return {Promise<admin.auth.UserRecord>}
  */
 export const createFirebaseUser = (account) => {
+  // retrieve account data UID.
+  const uid = account.getUID()
+
   // create firebase user data.
   const userData = {
-    uid: account.getUID(),
+    // user UID.
+    uid: uid,
+    // custom invalid email to avoid 3rd part providers override.
+    email: `${uid}@users.utopian`,
+    // display name.
     displayName: account.name,
+    // photo / avatar URL.
     photoURL: 'https://img.blocker.press/a/' + account.name
   }
 
@@ -44,14 +54,17 @@ export const createFirebaseUser = (account) => {
  * @returns {Promise<string>} Promise, that when completed, gives the custom authentication token.
  */
 export const createOrUpdateUser = (account) => {
+  // try to update.
   return updateFirebaseUser(account)
+  // return the account itself on success.
     .then(() => account)
+    // when it fails...
     .catch((error) => {
-      // create if not.
+      // create if not found.
       if (error.code === 'auth/user-not-found') {
         return createFirebaseUser(account)
       }
       // throw if needed.
-      throw error
+      return Promise.reject(error)
     })
 }

@@ -12,7 +12,8 @@ import { get } from 'lodash'
 const prepareErrorResponse = (error) => {
   // https error or not.
   const isHttpsError = error instanceof HttpsError
-
+  // This doesn't count as an 'explicit' error.
+  console.error('Unhandled error', error)
   if (isHttpsError) {
     // This doesn't count as an 'explicit' error.
     console.error('Unhandled error', error)
@@ -51,10 +52,18 @@ const getAuthorizationToken = (request) => {
 }
 
 const verifyToken = (idToken) => {
+  if (!idToken) {
+    return false
+  }
   return admin.auth()
     .verifyIdToken(idToken)
     .then(authToken => ({ uid: authToken.uid, token: authToken }))
-    .catch((e) => new HttpsError('unauthenticated', 'Unauthenticated'))
+    .catch((e) => {
+      // log original error.
+      console.log(e)
+      // return a new https error instance.
+      return new HttpsError('unauthenticated', 'Unauthenticated')
+    })
 }
 
 /**
@@ -79,10 +88,11 @@ export function onCall (handler) {
       context.auth = await verifyToken(idToken)
 
       // parse request data attribute.
-      const data = JSON.parse(get(request, 'body.data', {}))
+      // console.log(get(request, 'body.data', {}))
+      const data = get(request, 'body.data', {})
 
       // call the actual handler, passing the data and the context data as parameters.
-      const result = JSON.stringify(await handler(data, context))
+      const result = await handler(data, context)
 
       // complete the call bu sending a 200 response, with the result from the handler.
       response.status(200).send({ result })

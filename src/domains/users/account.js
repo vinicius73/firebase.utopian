@@ -22,6 +22,24 @@ const factoryProfile = (data) => {
 }
 
 /**
+ * Custom github account parsing.
+ *
+ * @param data
+ *
+ * @return {any | any | undefined | any | {} | {} | undefined}
+ */
+const factoryGithub = (data) => {
+  // extract github data.
+  const githubData = get(data, 'github', {})
+  // normalize avatar field.
+  githubData.avatar = get(githubData, 'avatar_url', null)
+  // normalize username field.
+  githubData.username = get(githubData, 'login', null)
+  // return the prepared object.
+  return githubData
+}
+
+/**
  * Account class definition.
  */
 export class Account extends Model {
@@ -33,6 +51,8 @@ export class Account extends Model {
   constructor (data = {}) {
     // prepare profile data.
     data.profile = factoryProfile(data)
+    // prepare github data.
+    data.github = factoryGithub(data)
     // call parent constructor.
     super(data)
   }
@@ -43,7 +63,7 @@ export class Account extends Model {
    * @return {string|null}
    */
   getAccountName () {
-    return get(this, 'name')
+    return get(this, 'name', null)
   }
 
   /**
@@ -52,7 +72,7 @@ export class Account extends Model {
    * @return {string|null}
    */
   getUID () {
-    return this.getAccountName() ? `steem:${this.getAccountName()}` : null
+    return this.getAccountName()
   }
 
   /**
@@ -80,8 +100,8 @@ export class Account extends Model {
    */
   getFields () {
     return {
-      id: null,
-      name: null,
+      id: null, // id - numeric Steem id.
+      name: null, // username.
       profile: {
         avatar: null,
         name: null,
@@ -89,6 +109,12 @@ export class Account extends Model {
         website: null,
         about: null,
         signature: null
+      },
+      github: {
+        username: null,
+        avatar: null,
+        name: null,
+        company: null
       },
       createdAt: null, // create date.
       updatedAt: null, // update date.

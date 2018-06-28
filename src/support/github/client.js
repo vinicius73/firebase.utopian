@@ -70,13 +70,13 @@ export class GithubClient {
   /**
    * Get a headers object to use on requests.
    *
-   * @return {{Accept: string, ContentType: string, Authorization?: string}}
+   * @return {{Accept: string, ContentType: string, Authorization: string}}
    */
   getHeaders () {
     // start a headers object.
     const headers = {
       // accept and content-type headers for the request.
-      Accept: 'application/vnd.github.v3+json',
+      Accept: ['application/vnd.github.v3+json', 'application/json'],
       ContentType: 'application/json'
     }
     // case an access token is present.
@@ -94,11 +94,9 @@ export class GithubClient {
    * @return {Promise<Object>}
    */
   getAccount () {
-    return this.http
-      .get(this.endpoints.account, { headers: this.getHeaders() })
-      .then(responseData => {
-        return Promise.resolve(get(responseData, 'account'))
-      })
+    return this.http.get(this.endpoints.account, {
+      headers: this.getHeaders()
+    })
   }
 }
 

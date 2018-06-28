@@ -1,5 +1,5 @@
 // imports.
-import { get, isObject, assign, mapValues } from 'lodash'
+import { get, isObject, assign, mapValues, isNil, isEmpty, omitBy } from 'lodash'
 import * as admin from 'firebase-admin'
 
 /**
@@ -48,9 +48,28 @@ export class Model {
    * @return {Promise<FirebaseFirestore.WriteResult>}
    */
   save (options = { merge: true }) {
-    return this.getCollection()
-      .doc(this.getPrimary())
-      .set(JSON.parse(JSON.stringify(this)), options)
+    // creates a document reference.
+    const reference = this.getCollection().doc(this.getPrimary())
+    // serialize-safe data.
+    const data = this.prepareData(this)
+
+    // save the data, merging fields non-matching.
+    return reference.set(data, options)
+  }
+
+  /**
+   * Update the current model instance, considering it already exists.
+   * @param options
+   * @return {Promise<FirebaseFirestore.WriteResult>}
+   */
+  update (options = { merge: true }) {
+    // creates a document reference.
+    const reference = this.getCollection().doc(this.getPrimary())
+
+    // serialize-safe data.
+    const data = this.prepareData(this.omitNil(this))
+    // save the data, merging fields non-matching.
+    return reference.set(data, options)
   }
 
   /**
@@ -80,6 +99,31 @@ export class Model {
       // case not object, just retrieve the value, defaulting to the model default.
       return get(data, fieldName, defaultValue)
     })
+  }
+
+  /**
+   * Omit any keys that are null or nullable.
+   *
+   * @param {Object} data    Values to omit nullish.
+   *
+   * @return {Object}
+   */
+  omitNil (data) {
+    // recurse when a value is an object, return it's value when it's not.
+    const predicate = (v) => (isObject(v) ? this.omitNil(v) : v)
+    // map all values to decide the strategy based on predicate.
+    const mapped = mapValues(data, predicate)
+    // omit all values considered empty.
+    return omitBy(mapped, isEmpty)
+  }
+
+  /**
+   * Prepare data for DB.
+   *
+   * @return {*}
+   */
+  prepareData (data) {
+    return JSON.parse(JSON.stringify(data))
   }
 }
 
