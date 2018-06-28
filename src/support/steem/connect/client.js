@@ -96,9 +96,7 @@ export class SteemConnectClient {
   getAccount () {
     return this.http
       .get(this.endpoints.account, { headers: this.getHeaders() })
-      .then(responseData => {
-        return Promise.resolve(get(responseData, 'account'))
-      })
+      .then(responseData => Promise.resolve(get(responseData, 'account')))
   }
 }
 
