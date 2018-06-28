@@ -1,4 +1,5 @@
 import { errorCodeMap } from './errorCodes'
+import { isUndefined } from 'lodash'
 
 /**
  * An explicit error that can be thrown from a handler to send an error to the
@@ -52,6 +53,8 @@ export class HttpsError extends Error {
         return 401
       case 'resource-exhausted':
         return 429
+      case 'invalid-data':
+        return 422
       case 'failed-precondition':
         return 400
       case 'aborted':
@@ -78,7 +81,7 @@ export class HttpsError extends Error {
       status: this.status,
       message: this.message
     }
-    if (!_.isUndefined(this.details)) {
+    if (!isUndefined(this.details)) {
       json.details = this.details
     }
     return json
