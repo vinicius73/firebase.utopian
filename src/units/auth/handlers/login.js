@@ -8,6 +8,7 @@ import { verifyToken as verifySteemConnectToken } from 'src/support/steem/connec
 import { createOrUpdateUser } from 'src/support/firebase/auth/user'
 // import the custom token issuer.
 import { issueToken } from 'src/support/firebase/auth/token'
+import { HttpsError } from '../../../support/firebase/functions/handler/errors'
 
 /**
  * Handle steem connect token exchange.
@@ -19,6 +20,7 @@ import { issueToken } from 'src/support/firebase/auth/token'
 export const handler = (data, context) => {
   // get token from request data.
   const token = get(data, 'token', get(data, 'data.token', ''))
+
   // when the token is not present or invalid length.
   if (!token || (token.length < 40)) {
     // reject the promise with a custom error.
@@ -36,7 +38,7 @@ export const handler = (data, context) => {
     // issue a custom authentication token for the frontend.
     .then(issueToken)
     // resolve the issued token on a custom object format.
-    .then((customToken) => Promise.resolve({ token: customToken }))
+    .then((customToken) => Promise.resolve({ message: 'SUCCESS', token: customToken }))
     // catch errors, rejecting with a clear message hiding details.
-    .catch(() => Promise.reject(new Error('error authenticating with SteemConnect.')))
+    .catch((e) => { console.log(e); return Promise.reject(new HttpsError('internal', 'Error authenticating with SteemConnect.')) })
 }
