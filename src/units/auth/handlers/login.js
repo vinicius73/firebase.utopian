@@ -8,7 +8,8 @@ import { verifyToken as verifySteemConnectToken } from 'src/support/steem/connec
 import { createOrUpdateUser } from 'src/support/firebase/auth/user'
 // import the custom token issuer.
 import { issueToken } from 'src/support/firebase/auth/token'
-import { HttpsError } from '../../../support/firebase/functions/handler/errors'
+// custom http errors.
+import { HttpsError } from 'src/support/firebase/functions/handler/errors'
 
 /**
  * Handle steem connect token exchange.
