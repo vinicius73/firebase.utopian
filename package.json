@@ -12,6 +12,7 @@
     "deploy:firebase": "firebase deploy --only functions",
     "start": "node ./bin/www",
     "prestart": "npm run -s build",
+    "test": "ava -v",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "resource-router-middleware": "^0.7.0"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
