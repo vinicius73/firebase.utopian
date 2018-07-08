@@ -8,7 +8,7 @@ import { Agent } from 'https'
 // flatten success responses body.
 const flattenSuccess = response => get(response, 'data', {})
 // flatten error responses body.
-const flattenError = error => error
+const flattenError = error => Promise.reject(error)
 
 /**
  * @method factoryInstance

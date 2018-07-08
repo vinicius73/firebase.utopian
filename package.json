@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
+    "axios-mock-adapter": "^1.15.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
@@ -57,10 +58,10 @@
   },
   "ava": {
     "files": [
-			"tests/**/*.test.js"
-		],
+      "tests/**/*.test.js"
+    ],
     "require": [
-			"babel-register"
-		]
+      "babel-register"
+    ]
   }
 }
